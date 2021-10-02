@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64599dd65e6f42c5ac66c496c203301d, type: 3}
+  m_Name: Audio
+  m_EditorClassIdentifier: 
+  _id:
+    _value: 1
+  _defaultItem: {fileID: 0}
+  _orderIndex: 0
+  _itemNames:
+  - moo.0
+  - moo.1
+  - moo.2
+  - moo.3
+  - moo.4
+  - moo.5
+  - impact.0
+  - impact.1
+  - impact.2
+  - impact.3
+  - shoot.0
+  _items:
+  - {fileID: 8300000, guid: c7afbe1856e13724ab6ff39328742619, type: 3}
+  - {fileID: 8300000, guid: d3e4355de5276cc47aa715eff2abf4f9, type: 3}
+  - {fileID: 8300000, guid: 82066b13d8b11da418f25117d8cf32b8, type: 3}
+  - {fileID: 8300000, guid: f499bd0c2e2f81b4a8e4fa61a1e27f04, type: 3}
+  - {fileID: 8300000, guid: 36e6b3488f09ea9459dbf64dc9da7133, type: 3}
+  - {fileID: 8300000, guid: 5a1bdf9d97ed22149908551f75a68b47, type: 3}
+  - {fileID: 8300000, guid: 9b89240192c1ede4cb2ee6e29c466940, type: 3}
+  - {fileID: 8300000, guid: 36595a9dfe7a3174c9cf2890216112b8, type: 3}
+  - {fileID: 8300000, guid: 04fce55ff2444254b85fa61593988784, type: 3}
+  - {fileID: 8300000, guid: 48ac644a5dd7a6f4b8ace79f456e3a0d, type: 3}
+  - {fileID: 8300000, guid: 66b587910f5b18941a2531bdf8467e9f, type: 3}
