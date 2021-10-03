@@ -9,6 +9,7 @@ namespace LD49.Game.Player {
 		[SerializeField] protected LayerMask _mask;
 		[SerializeField] protected Color     _hitObjectMaterialColor = Color.cyan;
 		[SerializeField] protected float     _speed                  = 1.5f;
+		[SerializeField] protected float     _sqrRange               = 10;
 
 		private Rigidbody currentObject { get; set; }
 
@@ -16,7 +17,7 @@ namespace LD49.Game.Player {
 			GetComponent<PlayerController>().onRestarted.AddListenerOnce(Restart);
 		}
 
-		private void Restart() => DropObject();
+		private void Restart(bool revertValues) => DropObject();
 
 		private void OnEnable() => Inputs.controls.Player.Telekinesis.AddAnyListenerOnce(HandleInputChanged);
 		private void OnDisable() => Inputs.controls.Player.Telekinesis.RemoveAnyListener(HandleInputChanged);
@@ -29,6 +30,7 @@ namespace LD49.Game.Player {
 		private void GrabObject() {
 			if (!MainCamera.cam) return;
 			if (!Physics.Raycast(MainCamera.cam.ScreenPointToRay(UnityEngine.Input.mousePosition), out var hit, 50, _mask)) return;
+			if (Vector3.SqrMagnitude(hit.transform.position - transform.position) > _sqrRange) return;
 			if (!hit.collider.TryGetComponent<Rigidbody>(out var hitRigidbody)) return;
 			currentObject = hitRigidbody;
 			if (currentObject.TryGetComponent<IDamageable>(out var damageable)) damageable.Damage(Vector3.zero, 0);
@@ -47,6 +49,10 @@ namespace LD49.Game.Player {
 
 		private void Update() {
 			if (!currentObject) return;
+			if (Vector3.SqrMagnitude(currentObject.transform.position - transform.position) > _sqrRange) {
+				DropObject();
+				return;
+			}
 			currentObject.velocity = _speed * (PlayerPointerHit.hitPoint - currentObject.transform.position);
 		}
 	}

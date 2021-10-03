@@ -63,6 +63,7 @@ namespace LD49.Game.Ui {
 				case Inputs.PlayerAction.Jump: return "Unstable: Jump";
 				case Inputs.PlayerAction.Shoot: return "Unstable: Shoot";
 				case Inputs.PlayerAction.Telekinesis: return "Unstable: Telekinesis";
+				case Inputs.PlayerAction.SwitchCamera: return "Unstable: Change Camera";
 				case Inputs.PlayerAction.None:
 				default: throw new ArgumentOutOfRangeException();
 			}

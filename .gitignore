@@ -41,3 +41,5 @@ UMotionData/
 # Builds
 *.apk
 *.unitypackage
+
+Web/config/config_prod.php

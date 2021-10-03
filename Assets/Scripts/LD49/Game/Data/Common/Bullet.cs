@@ -14,7 +14,7 @@ namespace LD49.Game.Common {
 		}
 
 		public void Init(Vector3 force) {
-			_trailRenderer.Clear();
+			if (_trailRenderer) _trailRenderer.Clear();
 			_rigidbody.velocity = Vector3.zero;
 			_rigidbody.AddForce(force, ForceMode.Impulse);
 		}

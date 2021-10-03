@@ -6,11 +6,13 @@ using Utils.Extensions;
 
 namespace LD49.Game.Data.Scoring {
 	public static class ScoringManager {
-		private static Dictionary<EnvironmentObjectCategory, int> globalObjectsDestroyed { get; } = new Dictionary<EnvironmentObjectCategory, int>();
-		private static Dictionary<EnvironmentObjectCategory, int> levelObjectsDestroyed  { get; } = new Dictionary<EnvironmentObjectCategory, int>();
+		private static Dictionary<EnvironmentObjectCategory, int>          globalObjectsDestroyed { get; } = new Dictionary<EnvironmentObjectCategory, int>();
+		private static Dictionary<EnvironmentObjectCategory, int>          levelObjectsDestroyed  { get; } = new Dictionary<EnvironmentObjectCategory, int>();
+		public static  IReadOnlyDictionary<EnvironmentObjectCategory, int> allObjectsDestroyed    => globalObjectsDestroyed;
 
 		private static bool  initialized     { get; set; }
 		private static float timeAtStart     { get; set; }
+		private static float timeAtStop      { get; set; } = -1;
 		private static int   levelsRestarted { get; set; }
 
 		private static void RefreshInit() {
@@ -25,7 +27,12 @@ namespace LD49.Game.Data.Scoring {
 			levelObjectsDestroyed.Clear();
 			levelsRestarted = 0;
 			timeAtStart = Time.time;
+			timeAtStop = -1;
 		}
+
+		public static void StopTimer() => timeAtStop = Time.time;
+
+		public static float GetTimer() => (timeAtStop > 0 ? timeAtStop : Time.time) - timeAtStart;
 
 		public static void ResetForLevel() {
 			RefreshInit();
@@ -46,22 +53,20 @@ namespace LD49.Game.Data.Scoring {
 			levelObjectsDestroyed[objectCategory]++;
 		}
 
-		public static int GetAggressiveScore() {
-			var score = 0;
-			score += Mathf.CeilToInt(timeAtStart);
-			score -= Mathf.CeilToInt(Time.time);
+		public static int GetWarmongerScore() {
+			var score = 500;
+			score -= Mathf.CeilToInt(GetTimer());
 			score -= levelsRestarted * 5;
 			score += globalObjectsDestroyed.Union(levelObjectsDestroyed).Sum(t => t.Value * t.Key.aggressiveScore);
-			return score;
+			return score.Clamp(0, 5000);
 		}
 
 		public static int GetPacifistScore() {
 			var score = 1000;
-			score += Mathf.CeilToInt(timeAtStart);
-			score -= Mathf.CeilToInt(Time.time);
+			score -= Mathf.CeilToInt(GetTimer());
 			score -= levelsRestarted * 5;
 			score += globalObjectsDestroyed.Union(levelObjectsDestroyed).Sum(t => t.Value * t.Key.pacifistScore);
-			return score;
+			return score.Clamp(0, 5000);
 		}
 	}
 }

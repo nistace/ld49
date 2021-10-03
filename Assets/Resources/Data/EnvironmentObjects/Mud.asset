@@ -12,9 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6e217fd3b49467ebc7920a82baa2063, type: 3}
   m_Name: Mud
   m_EditorClassIdentifier: 
+  _canBeDestroyed: 0
+  _maxHealth: 100
+  _faction: {fileID: 11400000, guid: 119a45a48a93e28449671ae5064427e2, type: 2}
   _behaviourOnHit: 0
   _audioOnHit: 
+  _audioOnDestroy: 
+  _particlesOnDestroy: 
   _audioCooldown: 2
-  _category: {fileID: 0}
   _aggressiveScore: 0
   _pacifistScore: 0
+  _unhappyEvenWith0Damages: 1
+  _order: 0
+  _sprite: {fileID: 21300000, guid: 912fcaa7fb0ce344eb5158fbe9497190, type: 3}

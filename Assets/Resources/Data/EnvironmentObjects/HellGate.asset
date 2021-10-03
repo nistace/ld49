@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6e217fd3b49467ebc7920a82baa2063, type: 3}
+  m_Name: HellGate
+  m_EditorClassIdentifier: 
+  _canBeDestroyed: 1
+  _maxHealth: 100
+  _faction: {fileID: 11400000, guid: 6e8b6466b4416a846aa15ea995924514, type: 2}
+  _behaviourOnHit: 0
+  _audioOnHit: 
+  _audioOnDestroy: squeek
+  _particlesOnDestroy: blood
+  _audioCooldown: 2
+  _aggressiveScore: 60
+  _pacifistScore: 30
+  _unhappyEvenWith0Damages: 0
+  _sprite: {fileID: 21300000, guid: 246dcd8771365564e8a5859001caa5e5, type: 3}

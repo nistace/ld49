@@ -75,6 +75,14 @@ namespace LD49.Input
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""SwitchCamera"",
+                    ""type"": ""Button"",
+                    ""id"": ""38e70816-eb64-49e4-bedf-1f4286e273ea"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -187,6 +195,17 @@ namespace LD49.Input
                     ""action"": ""Telekinesis"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6a508ee6-a992-470c-ae49-a95a1b8cc33f"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -229,6 +248,7 @@ namespace LD49.Input
             m_Player_UseStableCircuit = m_Player.FindAction("UseStableCircuit", throwIfNotFound: true);
             m_Player_Mouse = m_Player.FindAction("Mouse", throwIfNotFound: true);
             m_Player_Telekinesis = m_Player.FindAction("Telekinesis", throwIfNotFound: true);
+            m_Player_SwitchCamera = m_Player.FindAction("SwitchCamera", throwIfNotFound: true);
             // Game
             m_Game = asset.FindActionMap("Game", throwIfNotFound: true);
             m_Game_RestartLevel = m_Game.FindAction("RestartLevel", throwIfNotFound: true);
@@ -288,6 +308,7 @@ namespace LD49.Input
         private readonly InputAction m_Player_UseStableCircuit;
         private readonly InputAction m_Player_Mouse;
         private readonly InputAction m_Player_Telekinesis;
+        private readonly InputAction m_Player_SwitchCamera;
         public struct PlayerActions
         {
             private @Controls m_Wrapper;
@@ -299,6 +320,7 @@ namespace LD49.Input
             public InputAction @UseStableCircuit => m_Wrapper.m_Player_UseStableCircuit;
             public InputAction @Mouse => m_Wrapper.m_Player_Mouse;
             public InputAction @Telekinesis => m_Wrapper.m_Player_Telekinesis;
+            public InputAction @SwitchCamera => m_Wrapper.m_Player_SwitchCamera;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -329,6 +351,9 @@ namespace LD49.Input
                     @Telekinesis.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTelekinesis;
                     @Telekinesis.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTelekinesis;
                     @Telekinesis.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTelekinesis;
+                    @SwitchCamera.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchCamera;
+                    @SwitchCamera.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchCamera;
+                    @SwitchCamera.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchCamera;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -354,6 +379,9 @@ namespace LD49.Input
                     @Telekinesis.started += instance.OnTelekinesis;
                     @Telekinesis.performed += instance.OnTelekinesis;
                     @Telekinesis.canceled += instance.OnTelekinesis;
+                    @SwitchCamera.started += instance.OnSwitchCamera;
+                    @SwitchCamera.performed += instance.OnSwitchCamera;
+                    @SwitchCamera.canceled += instance.OnSwitchCamera;
                 }
             }
         }
@@ -400,6 +428,7 @@ namespace LD49.Input
             void OnUseStableCircuit(InputAction.CallbackContext context);
             void OnMouse(InputAction.CallbackContext context);
             void OnTelekinesis(InputAction.CallbackContext context);
+            void OnSwitchCamera(InputAction.CallbackContext context);
         }
         public interface IGameActions
         {

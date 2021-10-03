@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace LD49.Game {
-	public class CameraFollow : MonoBehaviour {
+	public class CameraFollow : MonoBehaviour, ICameraBehaviour {
 		[SerializeField] protected Transform _target;
 		[SerializeField] protected Vector3   _offset;
 		[SerializeField] protected float     _smooth;
@@ -10,5 +10,7 @@ namespace LD49.Game {
 		private void FixedUpdate() {
 			transform.position = Vector3.SmoothDamp(transform.position, _target.position + _offset, ref _currentVelocity, _smooth);
 		}
+
+		[ContextMenu("Attach")] public void Attach() => transform.position = _target.position + _offset;
 	}
 }

@@ -15,7 +15,7 @@ namespace LD49.Game.Ui {
 
 		private void Update() {
 			var pacifistScore = ScoringManager.GetPacifistScore();
-			var aggressiveScore = ScoringManager.GetAggressiveScore();
+			var aggressiveScore = ScoringManager.GetWarmongerScore();
 			var pacifistRatio = (float) pacifistScore / Mathf.Max(pacifistScore + aggressiveScore, 1);
 			_pacifistBar.fillAmount = pacifistRatio.Clamp(0, 1);
 			_aggressiveBar.fillAmount = 1 / pacifistRatio;

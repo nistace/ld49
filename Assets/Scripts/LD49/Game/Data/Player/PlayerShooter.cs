@@ -1,16 +1,14 @@
-﻿using LD49.Input;
+﻿using LD49.Game.Common;
+using LD49.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utils.Extensions;
 
 namespace LD49.Game.Player {
 	public class PlayerShooter : MonoBehaviour {
-		[SerializeField] protected Transform          _armsAxis;
-		[SerializeField] protected PlayerShooterGun[] _guns;
-		[SerializeField] protected float              _fireDelay = .1f;
+		[SerializeField] protected ShooterGun _gun;
 
-		private bool  firing        { get; set; }
-		private float _nextFireTime { get; set; }
+		private bool firing { get; set; }
 
 		private void OnEnable() => Inputs.controls.Player.Fire.AddAnyListenerOnce(HandleInputChanged);
 		private void OnDisable() => Inputs.controls.Player.Fire.RemoveAnyListener(HandleInputChanged);
@@ -18,17 +16,8 @@ namespace LD49.Game.Player {
 		private void HandleInputChanged(InputAction.CallbackContext obj) => firing = obj.performed;
 
 		private void Update() {
-			UpdateAxisRotation();
-			UpdateFiring();
+			_gun.AimAt(PlayerPointerHit.hitPoint);
+			if (firing) _gun.UpdateFiring();
 		}
-
-		private void UpdateFiring() {
-			if (!firing) return;
-			if (!(Time.time >= _nextFireTime)) return;
-			_guns.ForEach(t => t.Trigger());
-			_nextFireTime = Time.time + _fireDelay;
-		}
-
-		private void UpdateAxisRotation() => _armsAxis.forward = (PlayerPointerHit.hitPoint - _armsAxis.position).With(z: 0);
 	}
 }

@@ -17,6 +17,9 @@ public class LevelGenerator : MonoBehaviour {
 	[SerializeField] protected int          _borderWidth;
 	[SerializeField] protected Transform    _pointerHit;
 
+	[SerializeField] protected float _cameraOverviewDistanceWidthRatio;
+	[SerializeField] protected float _cameraOverviewDistanceHeightRatio;
+
 	[ContextMenu("Parse Level Image")] private void ParseLevelImage() => ParseLevelImage(_levelTexture);
 
 	public void ParseLevelImage(Texture2D mapTexture) {
@@ -33,6 +36,9 @@ public class LevelGenerator : MonoBehaviour {
 				InstantiatePrefab(prefabData, new Vector3(i, j, 0));
 			}
 		}
+
+		CameraOverview.target = new Vector3(mapTexture.width / 2f - .5f, mapTexture.height / 2f - .5f,
+			Mathf.Min(-mapTexture.width * _cameraOverviewDistanceWidthRatio, -mapTexture.height * _cameraOverviewDistanceHeightRatio));
 
 		_ground.localScale = new Vector3(mapTexture.width + 2 * _borderWidth, _borderWidth, 1);
 		_ground.position = new Vector3(mapTexture.width / 2f - .5f, -_borderWidth / 2f - .5f, 0);

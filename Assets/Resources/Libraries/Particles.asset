@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a302d449578e4101b3566ee3b51d84df, type: 3}
+  m_Name: Particles
+  m_EditorClassIdentifier: 
+  _id:
+    _value: 2
+  _defaultItem: {fileID: 0}
+  _orderIndex: 0
+  _itemNames:
+  - planks
+  - planks2
+  - blood
+  _items:
+  - {fileID: 1498304891914257040, guid: 17c3b69415966c44a9ce443e935169ff, type: 3}
+  - {fileID: 1498304891914257040, guid: a93e62c41b111614b82a34941c33e4b3, type: 3}
+  - {fileID: 1498304891914257040, guid: aab22aa081fd9ea4f94b3de3b885259c, type: 3}

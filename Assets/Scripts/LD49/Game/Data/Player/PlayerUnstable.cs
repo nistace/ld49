@@ -8,6 +8,7 @@ using Utils.Extensions;
 
 namespace LD49.Game.Player {
 	public class PlayerUnstable : MonoBehaviour {
+		[SerializeField] protected PlayerController    _player;
 		[SerializeField] protected bool                _stableOnStart = true;
 		[SerializeField] protected Transform           _unstableOrigin;
 		[SerializeField] protected float               _radius          = 5;
@@ -16,13 +17,16 @@ namespace LD49.Game.Player {
 		[SerializeField] private   Inputs.PlayerAction _unstablePlayerAction;
 		[SerializeField] protected LayerMask           _hitMask;
 		[SerializeField] protected ParticleSystem      _shockWaveParticles;
+		[SerializeField] protected AudioClip           _shockWaveAudio;
 		[SerializeField] protected float               _maxDamage    = 50;
 		[SerializeField] protected float               _delaySwitch  = 10;
 		[SerializeField] protected int                 _warningBeeps = 3;
 		[SerializeField] protected AudioClip           _beepAudioClip;
 		[SerializeField] protected AudioClip           _switchUnstableAudioClip;
 		[SerializeField] protected AudioClip           _stableAudioClip;
-		[SerializeField] protected int                 _stableCircuitsCount = 3;
+		[SerializeField] protected int                 _stableCircuitsCount   = 3;
+		[SerializeField] protected float               _shockWavePlayerDamage = 25;
+		[SerializeField] protected float               _stableCircuitHeal     = 100;
 
 		private int                 lastBeepPlayed             { get; set; }
 		private float               nextTimeSwitchUnstable     { get; set; }
@@ -32,14 +36,14 @@ namespace LD49.Game.Player {
 		private InputAction         currentUnstableAction      { get; set; }
 		public  bool                stable                     => unstablePlayerAction == Inputs.PlayerAction.None;
 		public  int                 stableCircuitsCount        => _stableCircuitsCount;
+		private Collider[]          collidersInRange           { get; } = new Collider[128];
+		private int                 saveStableCircuitsCount    { get; set; }
 
 		public UnityEvent onUnstableActionChanged { get; } = new UnityEvent();
 
-		private Collider[] collidersInRange { get; } = new Collider[128];
-
 		private void Start() {
-			Restart();
-			GetComponent<PlayerController>().onRestarted.AddListenerOnce(Restart);
+			Restart(false);
+			_player.onRestarted.AddListenerOnce(Restart);
 			BonusEnvironmentObject.onGatheredByPlayer.AddListenerOnce(HandleBonusGathered);
 		}
 
@@ -47,7 +51,9 @@ namespace LD49.Game.Player {
 			if (type == BonusEnvironmentObject.Type.StableCircuit) _stableCircuitsCount++;
 		}
 
-		private void Restart() {
+		private void Restart(bool revertValues) {
+			if (revertValues) _stableCircuitsCount = Mathf.Min(_stableCircuitsCount, saveStableCircuitsCount);
+			else saveStableCircuitsCount = _stableCircuitsCount;
 			if (_stableOnStart) SetStable();
 			else SetUnstableAction(_unstablePlayerAction);
 		}
@@ -60,10 +66,11 @@ namespace LD49.Game.Player {
 			if (_stableCircuitsCount <= 0) return;
 			_stableCircuitsCount--;
 			SetStable();
+			_player.Heal(_stableCircuitHeal);
 		}
 
 		private void RollUnstableAction(bool resetDelaySwitch = true) {
-			SetUnstableAction(EnumUtils.Values<Inputs.PlayerAction>().Random(t => t.In(Inputs.PlayerAction.None) ? 0 : 1));
+			SetUnstableAction(EnumUtils.Values<Inputs.PlayerAction>().Random(t => t.In(Inputs.PlayerAction.None, unstablePlayerAction) ? 0 : 1));
 			if (resetDelaySwitch) ResetDelay();
 			AudioManager.Sfx.Play(_switchUnstableAudioClip);
 		}
@@ -103,6 +110,8 @@ namespace LD49.Game.Player {
 
 		private void Boom(InputAction.CallbackContext obj) {
 			_shockWaveParticles.Play();
+			AudioManager.Sfx.Play(_shockWaveAudio);
+			_player.Damage(Vector3.zero, _shockWavePlayerDamage);
 			var hitCollidersCount = Physics.OverlapSphereNonAlloc(transform.position, _radius, collidersInRange, _hitMask);
 			var unstableOriginPosition = _unstableOrigin.position;
 			for (var i = 0; i < hitCollidersCount; ++i) {

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Text;
-using Menu;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
@@ -10,7 +9,7 @@ namespace LD49.Game.Data.Scoring {
 	public class LeaderBoardManager : MonoBehaviour {
 		private static LeaderBoardManager instance { get; set; }
 
-		private static string scoresUrl => Application.isEditor || Debug.isDebugBuild ? "http://localhost/ld49/scores" : "https://nathanistace.be/ludumdare49/scores";
+		private static string scoresUrl => Application.isEditor || Debug.isDebugBuild ? "http://localhost/ld49/scores" : "https://nathanistace.be/gamejams/ludumdare49/scores";
 
 		private void Awake() {
 			instance = this;

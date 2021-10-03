@@ -12,8 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6e217fd3b49467ebc7920a82baa2063, type: 3}
   m_Name: Man
   m_EditorClassIdentifier: 
+  _canBeDestroyed: 1
+  _maxHealth: 30
+  _faction: {fileID: 11400000, guid: 9094a92c2a161f244945dcaa1af34219, type: 2}
   _behaviourOnHit: 0
   _audioOnHit: man
+  _audioOnDestroy: splatch
+  _particlesOnDestroy: blood
   _audioCooldown: 2
   _aggressiveScore: 20
   _pacifistScore: -30
+  _unhappyEvenWith0Damages: 1
+  _order: 0
+  _sprite: {fileID: 21300000, guid: 9c8101f9d83284b469751bedc7ee5726, type: 3}

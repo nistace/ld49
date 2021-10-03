@@ -12,8 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6e217fd3b49467ebc7920a82baa2063, type: 3}
   m_Name: Cow
   m_EditorClassIdentifier: 
+  _canBeDestroyed: 1
+  _maxHealth: 50
+  _faction: {fileID: 11400000, guid: 9094a92c2a161f244945dcaa1af34219, type: 2}
   _behaviourOnHit: 0
   _audioOnHit: moo
+  _audioOnDestroy: splatch
+  _particlesOnDestroy: blood
   _audioCooldown: 2
   _aggressiveScore: 5
   _pacifistScore: -20
+  _unhappyEvenWith0Damages: 0
+  _order: 0
+  _sprite: {fileID: 21300000, guid: 858f544e8bbb7064f836213ff2e9fd09, type: 3}

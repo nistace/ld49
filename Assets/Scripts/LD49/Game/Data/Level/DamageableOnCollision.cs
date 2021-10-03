@@ -9,8 +9,9 @@ namespace LD49.Game.Data.Level {
 		private void Reset() => _environmentObject = GetComponent<EnvironmentObject>();
 
 		private void OnCollisionEnter(Collision other) {
+			if (other.gameObject.layer == LayerMask.NameToLayer("Bullet")) return;
 			if (other.gameObject.layer != LayerMask.NameToLayer("Player") && !(other.relativeVelocity.sqrMagnitude >= _minSqrCollisionVelocity)) return;
-			_environmentObject.SetDamaged();
+			_environmentObject.SetDamaged(other.relativeVelocity.sqrMagnitude * .1f);
 			_environmentObject.PlayAudio();
 		}
 	}
