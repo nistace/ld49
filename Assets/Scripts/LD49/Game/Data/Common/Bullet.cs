@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Utils.Audio;
 
-namespace LD49.Game.Player {
+namespace LD49.Game.Common {
 	public class Bullet : MonoBehaviour {
 		[SerializeField] protected TrailRenderer _trailRenderer;
 		[SerializeField] protected Rigidbody     _rigidbody;

@@ -1,13 +1,20 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Utils.Extensions;
 
-namespace LD49.Game.Player {
+namespace LD49.Game.Common {
 	public static class BulletPool {
-		private static Dictionary<string, List<Bullet>> pool { get; } = new Dictionary<string, List<Bullet>>();
+		private static Dictionary<string, List<Bullet>> pool          { get; } = new Dictionary<string, List<Bullet>>();
+		private static HashSet<Bullet>                  activeBullets { get; } = new HashSet<Bullet>();
+
+		public static void Clear() {
+			pool.Clear();
+		}
 
 		public static Bullet Instantiate(Bullet bullet, Vector3 position, Vector3 force) {
 			var instance = GetFromPoolOrCreate(bullet);
+			activeBullets.Add(instance);
 			instance.transform.position = position;
 			instance.Init(force);
 			return instance;
@@ -25,6 +32,9 @@ namespace LD49.Game.Player {
 			if (!pool.ContainsKey(bullet.name)) pool.Add(bullet.name, new List<Bullet>());
 			pool[bullet.name].Add(bullet);
 			bullet.gameObject.SetActive(false);
+			activeBullets.Remove(bullet);
 		}
+
+		public static void PoolAll() => activeBullets.ToArray().ForEach(Pool);
 	}
 }
